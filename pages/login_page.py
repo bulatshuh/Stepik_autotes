@@ -8,10 +8,6 @@ class LoginPage(BasePage):
         self.should_be_login_form()
         self.should_be_register_form()
 
-    def go_to_login_page(self):
-        login_link = self.browser.find_element(*LoginPageLocators.LOGIN_LINK)
-        login_link.click()
-
     def should_be_login_url(self):
         cur_url = self.browser.current_url
         assert '/accounts/login/' in cur_url, 'URL address is wrong'
