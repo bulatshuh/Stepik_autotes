@@ -32,3 +32,11 @@ class ItemPage(BasePage):
         item_price = self.browser.find_element(*ItemPageLocators.ITEM_PRICE).text
         message_item_price = self.browser.find_element(*ItemPageLocators.MESSAGE_ITEM_PRICE).text
         assert item_price == message_item_price, 'wrong item price'
+
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ItemPageLocators.SUCCESS_MESSAGE), \
+            "Success message is presented, but should not be"
+
+    def should_be_disappeared_success_message(self):
+        assert self.is_disappeared(*ItemPageLocators.SUCCESS_MESSAGE), \
+            "Success message is presented, but should be disappeared"
