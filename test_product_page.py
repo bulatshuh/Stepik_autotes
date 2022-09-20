@@ -6,7 +6,7 @@ from .cred import Creds
 import time
 
 
-class TestUserAddToBasketFromProductPage():
+class TestUserAddToBasketFromProductPage:
     @pytest.fixture(scope='function', autouse=True)
     def setup(self, browser):
         link = 'http://selenium1py.pythonanywhere.com/ru/catalogue/the-shellcoders-handbook_209/?promo=newYear'
@@ -35,6 +35,18 @@ class TestUserAddToBasketFromProductPage():
 
 
 @pytest.mark.need_review
+def test_user_can_add_product_to_basket(browser):
+    link = 'http://selenium1py.pythonanywhere.com/ru/catalogue/the-shellcoders-handbook_209/?promo=newYear'
+    page = ItemPage(browser, link)
+    page.open()
+    page.should_not_be_success_message()
+    page.add_item_to_basket()
+    page.solve_quiz_and_get_code()
+    page.should_be_correct_name()
+    page.should_be_correct_price()
+
+
+@pytest.mark.skip
 @pytest.mark.parametrize('link', ["http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0",
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer1",
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer2",
@@ -45,7 +57,7 @@ class TestUserAddToBasketFromProductPage():
                                   pytest.param("http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer7", marks=pytest.mark.xfail),
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer8",
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer9"])
-def test_guest_can_add_product_to_basket_2(browser, link):
+def test_guest_can_add_product_to_basket_different_promos(browser, link):
     page = ItemPage(browser, link)
     page.open()
     page.add_item_to_basket()
